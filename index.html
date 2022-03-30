@@ -34,7 +34,7 @@
     <!-- Ini navigasi -->
     <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top" style="background-color: rgb(46, 19, 109)">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="https://id.wikipedia.org/wiki/Indonesia" target="_blank">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Indonesia_%28physical_version%29.svg/800px-Flag_of_Indonesia_%28physical_version%29.svg.png" alt="" width="30" height="24" /> </a
         ><a class="navbar-brand" href="#">Dennis Satriani Sp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,7 +120,7 @@
               <div class="card-body">
                 <p class="card-text">
                   Saya belajar sambil mengembangkan proyek. saya belajar tentang bagaimana cara membuat website dengan bahasa HTML,CSS,PHP,dan JavaScript. Proyek html yang pernah saya buat adalah website portofolio ini. untuk lebih lanjut
-                  <a href="">Klik disini!</a>
+                  <a href="https://drive.google.com/drive/folders/1wvaYfLvV--wRzOuUWil47cJSadLCxgHI" target="_blank">Klik disini!</a>
                 </p>
               </div>
             </div>
@@ -131,7 +131,7 @@
               <div class="card-body">
                 <p class="card-text">
                   Selain pengembangan website, saya juga belajar tentang desain user interface. sofware yang saya gunakan untuk mendesain user interface adalah figma. di dalam figma kita bisa mendesain sesuai dengan keinginan dan
-                  kreatifitas kita. Untuk info lebih lanjut <a href="">Klik Disini!</a>
+                  kreatifitas kita. Untuk info lebih lanjut <a href="https://drive.google.com/drive/folders/1lYK9l89YcHx7sDYyu3blOoJ6dcJeUS6f" target="_blank">Klik Disini!</a>
                 </p>
               </div>
             </div>
@@ -142,7 +142,7 @@
               <div class="card-body">
                 <p class="card-text">
                   Saya juga belajar tentang aplikasi android. saya belajar bahasa java. proyek pertama yang saya buat adalah program kasir. saya mengerjakannya di aplikasi netbeans.Kalau aplikasi android saya mengerjakannya d android
-                  studio. <a href="">Klik Disini!</a>
+                  studio. <a href="https://drive.google.com/drive/folders/1gnZKAnBVsMcl8AwQjBtNd7GUIo0ualcz" target="_blank">Klik Disini!</a>
                 </p>
               </div>
             </div>
@@ -167,20 +167,28 @@
         </div>
         <div class="row mb-3 justify-content-center">
           <div class="col-md-8">
-            <form>
+            <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+              <strong>Hai!! Terima kasih!</strong> Pesan mu telah di terima dan akan di proses, kami akan menghubungi mu 2 x 24jam
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form id="contact-saya-form">
               <div class="mb-3">
                 <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="name" aria-describedby="name" />
+                <input type="text" class="form-control" name="nama" id="name" aria-describedby="name" />
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email </label>
-                <input type="email" class="form-control" id="email" aria-describedby="email" />
+                <input type="email" name="email" class="form-control" id="email" aria-describedby="email" />
               </div>
               <div class="mb-3">
                 <label for="pesan" class="form-label">Pesan</label>
-                <textarea class="form-control" id="pesan" rows="3"></textarea>
+                <textarea name="pesan" class="form-control" id="pesan" rows="3"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Kirim</button>
+              <button type="submit" class="btn btn-primary btn-kirim">Kirim</button>
+              <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
             </form>
           </div>
         </div>
@@ -201,5 +209,31 @@
     </footer>
     <!-- Akhir Footer -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwFYVEHXGoRUpj70K1XFonbz5E5EW9yOKVmFye6vlqyo1Ot3g3oE60UwWP4jv2k5EZ7gQ/exec';
+      const form = document.forms['contact-saya-form'];
+      const btnKirim = document.querySelector('.btn-kirim');
+      const btnLoading = document.querySelector('.btn-loading');
+      const myAlert = document.querySelector('.my-alert');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        btnLoading.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+          .then((response) => {
+            //BTN
+            btnLoading.classList.toggle('d-none');
+            btnKirim.classList.toggle('d-none');
+            //ALERT
+            myAlert.classList.toggle('d-none');
+            //Reset
+            form.reset();
+            console.log('Success!', response);
+          })
+          .catch((error) => console.error('Error!', error.message));
+      });
+    </script>
   </body>
 </html>
